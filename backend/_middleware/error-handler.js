@@ -1,8 +1,14 @@
 module.exports = errorHandler;
 
 function errorHandler(err, req, res, next) {
-    // Force log all errors
-    console.error('GLOBAL ERROR HANDLER:', err);
+    // Enhanced error logging with request details
+    console.error('GLOBAL ERROR HANDLER:', {
+        error: err,
+        method: req.method,
+        url: req.originalUrl,
+        body: req.body,
+        headers: req.headers
+    });
 
     switch (true) {
         case typeof err === 'string':
@@ -13,7 +19,13 @@ function errorHandler(err, req, res, next) {
         case err.name === 'UnauthorizedError':
             // jwt authentication error
             return res.status(401).json({ message: 'Unauthorized' });
+        case err.name === 'ValidationError':
+            // mongoose validation error
+            return res.status(400).json({ message: err.message });
+        case err.name === 'SequelizeValidationError':
+            // sequelize validation error
+            return res.status(400).json({ message: err.errors.map(e => e.message).join(', ') });
         default:
-            return res.status(500).json({ message: err.message });
+            return res.status(500).json({ message: err.message || 'An unknown error occurred' });
     }
 }
