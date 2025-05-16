@@ -10,17 +10,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Updated CORS configuration to explicitly allow frontend domains
+// More permissive CORS configuration
 app.use(cors({
-  origin: ['https://ipt-final-e2bdf.web.app', 'http://localhost:4200'],
+  origin: function(origin, callback) {
+    // Allow all origins
+    callback(null, true);
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept']
 }));
+
+// OPTIONS handling for preflight requests
+app.options('*', cors());
 
 // Add a simple test endpoint
 app.get('/', (req, res) => {
-  res.json({ message: 'API is working!' });
+  res.json({ 
+    message: 'API is working!',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
 });
 
 // api routes
