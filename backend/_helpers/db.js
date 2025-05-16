@@ -7,24 +7,53 @@ module.exports = db = {};
 initialize();
 
 async function initialize() {
-    const { host, port, user, password, database } = config.database;
+    // Use environment variables if available, otherwise use config.json
+    const dbConfig = {
+        host: process.env.DB_HOST || config.database.host,
+        port: process.env.DB_PORT || config.database.port,
+        user: process.env.DB_USER || config.database.user,
+        password: process.env.DB_PASSWORD || config.database.password,
+        database: process.env.DB_NAME || config.database.database
+    };
     
-    // First create the database if it doesn't exist
-    const connection = await mysql.createConnection({ host, port, user, password });
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
-    await connection.end();
+    console.log('Connecting to database with configuration:', {
+        host: dbConfig.host,
+        port: dbConfig.port,
+        user: dbConfig.user,
+        database: dbConfig.database
+    });
+    
+    try {
+        // First create the database if it doesn't exist
+        const connection = await mysql.createConnection({ 
+            host: dbConfig.host, 
+            port: dbConfig.port, 
+            user: dbConfig.user, 
+            password: dbConfig.password 
+        });
+        
+        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbConfig.database}\`;`);
+        await connection.end();
+        console.log('Database exists or was created successfully');
+    } catch (error) {
+        console.error('Error creating database:', error);
+        throw error;
+    }
 
     // Then create the Sequelize connection with all necessary parameters
-    const sequelize = new Sequelize(database, user, password, {
-        host,
-        port,
+    const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
+        host: dbConfig.host,
+        port: dbConfig.port,
         dialect: 'mysql',
-        logging: false, // Set to console.log to see SQL queries
+        logging: console.log, // Log SQL queries during startup
         pool: {
             max: 5,
             min: 0,
             acquire: 30000,
             idle: 10000
+        },
+        dialectOptions: {
+            connectTimeout: 60000 // Increase connection timeout
         }
     });
 
@@ -63,5 +92,12 @@ async function initialize() {
 
     db.Workflow.belongsTo(db.Employee, { foreignKey: 'employeeId' });
 
-    await sequelize.sync({ alter: true });
+    // Use sync with caution in production - consider using migrations
+    try {
+        await sequelize.sync({ alter: true });
+        console.log('Database models synchronized successfully');
+    } catch (error) {
+        console.error('Error synchronizing database models:', error);
+        throw error;
+    }
 }

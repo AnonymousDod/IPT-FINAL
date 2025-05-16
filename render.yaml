@@ -3,19 +3,38 @@ services:
   - type: web
     name: employee-management-backend
     env: node
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && node server.js
+    region: singapore
+    plan: free
+    buildCommand: npm install && cd backend && npm install
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: NODE_VERSION
         value: 16
+      # Database configuration
+      - key: DB_HOST
+        value: 153.92.15.31
+      - key: DB_PORT
+        value: 3306
+      - key: DB_USER
+        value: u875409848_ito
+      - key: DB_PASSWORD
+        value: 9T2Z5$3UKkgSYzE
+      - key: DB_NAME
+        value: u875409848_ito
+      # JWT Secret for authentication
+      - key: JWT_SECRET
+        value: AXAXAXAXAXAXAXDXDXDXD
+    healthCheckPath: /
     autoDeploy: true
 
   # Frontend Angular service
   - type: web
     name: employee-management-frontend
     env: static
+    region: singapore
+    plan: free
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/dist/frontend
     envVars:
