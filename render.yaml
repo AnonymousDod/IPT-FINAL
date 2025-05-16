@@ -1,11 +1,11 @@
 services:
   # Backend API service
   - type: web
-    name: employee-management-backend
+    name: employee-management-api
     env: node
     region: singapore
     plan: free
-    buildCommand: npm install && cd backend && npm install
+    buildCommand: npm install
     startCommand: npm start
     envVars:
       - key: NODE_ENV
