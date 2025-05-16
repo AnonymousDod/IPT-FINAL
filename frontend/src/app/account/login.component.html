@@ -1,0 +1,58 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+    <h3>Login</h3>
+
+    <!-- Error Alert -->
+    <div *ngIf="error" class="alert alert-danger">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{ error }}</span>
+        <button type="button" class="btn-close" (click)="error = ''" aria-label="Close"></button>
+    </div>
+
+    <input 
+        type="email" 
+        id="email" 
+        formControlName="email" 
+        class="form-control" 
+        placeholder="Enter your email"
+        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" 
+    />
+    <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+        <div *ngIf="f['email'].errors?.['required']">Email is required</div>
+        <div *ngIf="f['email'].errors?.['email']">Please enter a valid email</div>
+    </div>
+
+    <div class="password-field">
+        <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password" 
+            formControlName="password" 
+            class="form-control" 
+            placeholder="Enter your password"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" 
+        />
+        <button 
+            type="button" 
+            class="toggle-password" 
+            (click)="showPassword = !showPassword"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        >
+            <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+        </button>
+    </div>
+    <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+        <div *ngIf="f['password'].errors?.['required']">Password is required</div>
+    </div>
+
+    <div class="forgot-link">
+        <a routerLink="../forgot-password">Forgot Password?</a>
+    </div>
+
+    <button type="submit" class="btn-submit" [disabled]="loading">
+        <span *ngIf="loading" class="spinner"></span>
+        Login
+    </button>
+
+    <div class="account-link">
+        Don't have an account? <a routerLink="../register">Create Account</a>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header">
+        <h3>{{id ? 'Edit' : 'Add'}} Workflow</h3>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group mb-3">
+                <label for="name">Workflow Name</label>
+                <input type="text" class="form-control" [(ngModel)]="workflow.name" name="name" required />
+            </div>
+            <div class="form-group mb-3">
+                <label for="type">Workflow Type</label>
+                <select class="form-select" [(ngModel)]="workflow.type" name="type" required>
+                    <option value="leave">Leave Approval</option>
+                    <option value="expense">Expense Approval</option>
+                    <option value="transfer">Transfer Approval</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="departmentId">Department</label>
+                <select class="form-select" [(ngModel)]="workflow.departmentId" name="departmentId" required>
+                    <option *ngFor="let dept of departments" [value]="dept.id">{{dept.name}}</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="description">Description</label>
+                <textarea class="form-control" [(ngModel)]="workflow.description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label for="status">Status</label>
+                <select class="form-select" [(ngModel)]="workflow.status" name="status" required>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    Save
+                </button>
+                <a routerLink="../" class="btn btn-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div> 

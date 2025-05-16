@@ -1,0 +1,14 @@
+{
+  "name": "employee-management-system",
+  "version": "1.0.0",
+  "description": "Employee Management System with Angular frontend and Node.js backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "start-all.bat",
+    "install-all": "powershell -ExecutionPolicy Bypass -Command \"cd backend; npm install; cd ../frontend; npm install\"",
+    "start-backend": "start-backend.bat",
+    "start-frontend": "start-frontend.bat"
+  },
+  "author": "",
+  "license": "ISC"
+} 

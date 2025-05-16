@@ -1,0 +1,148 @@
+<div *ngIf="showAddForm" class="card-custom" style="margin-bottom: 32px;">
+  <div class="card-header-custom">ADD ACCOUNT</div>
+  <form (ngSubmit)="saveAdd()" style="padding: 24px 32px 16px 32px;">
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label class="form-label">Title</label>
+        <select class="form-control" [(ngModel)]="addAccountForm.title" name="title">
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Ms">Ms</option>
+          <option value="Dr">Dr</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">First Name</label>
+        <input class="form-control" [(ngModel)]="addAccountForm.firstName" name="firstName" />
+      </div>
+      <div class="col-md-5">
+        <label class="form-label">Last Name</label>
+        <input class="form-control" [(ngModel)]="addAccountForm.lastName" name="lastName" />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
+        <label class="form-label">Email</label>
+        <input class="form-control" [(ngModel)]="addAccountForm.email" name="email" />
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <label class="form-label">Role</label>
+        <select class="form-control" [(ngModel)]="addAccountForm.role" name="role">
+          <option value="User">User</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Status</label>
+        <select class="form-control" [(ngModel)]="addAccountForm.status" name="status">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 16px;">
+      <button type="submit" class="btn btn-custom" [disabled]="loading">Save</button>
+      <button type="button" class="btn btn-secondary btn-custom" (click)="cancelAdd()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="showEditForm" class="card-custom" style="margin-bottom: 32px;">
+  <div class="card-header-custom">EDIT ACCOUNT</div>
+  <form (ngSubmit)="saveEditForm()" style="padding: 24px 32px 16px 32px;">
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label class="form-label">Title</label>
+        <select class="form-control" [(ngModel)]="editAccountForm.title" name="editTitle">
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Ms">Ms</option>
+          <option value="Dr">Dr</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">First Name</label>
+        <input class="form-control" [(ngModel)]="editAccountForm.firstName" name="editFirstName" />
+      </div>
+      <div class="col-md-5">
+        <label class="form-label">Last Name</label>
+        <input class="form-control" [(ngModel)]="editAccountForm.lastName" name="editLastName" />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
+        <label class="form-label">Email</label>
+        <input class="form-control" [(ngModel)]="editAccountForm.email" name="editEmail" />
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <label class="form-label">Role</label>
+        <select class="form-control" [(ngModel)]="editAccountForm.role" name="editRole">
+          <option value="User">User</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Status</label>
+        <select class="form-control" [(ngModel)]="editAccountForm.status" name="editStatus">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 16px;">
+      <button type="submit" class="btn btn-custom" [disabled]="loading">Save</button>
+      <button type="button" class="btn btn-secondary btn-custom" (click)="cancelEditForm()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<div class="card-header-custom">ACCOUNTS</div>
+<div class="table-responsive">
+    <table class="table table-striped table-custom">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="loading">
+                <td colspan="7" class="text-center">
+                    <span class="spinner-border spinner-border-lg"></span>
+                </td>
+            </tr>
+            <tr *ngFor="let user of users">
+                <td>{{user.title}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <span class="badge-custom" [ngClass]="{'badge-active': user.status === 'Active', 'badge-inactive': user.status === 'Inactive'}">
+                        {{user.status}}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-custom" (click)="openEditForm(user)">Edit</button>
+                </td>
+            </tr>
+            <tr *ngIf="!loading && users.length === 0">
+                <td colspan="7" class="text-center">
+                    No users found
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="display: flex; justify-content: flex-end; padding: 18px 18px 18px 0;">
+        <button class="btn btn-custom" (click)="openAddForm()">Add Account</button>
+    </div>
+</div> 

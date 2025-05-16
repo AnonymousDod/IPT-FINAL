@@ -1,0 +1,196 @@
+@import '../styles/variables.less';
+
+// Variables
+@primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+@secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+@glass-bg: rgba(255, 255, 255, 0.1);
+@glass-border: rgba(255, 255, 255, 0.2);
+@glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+// Global styles
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: @bg-secondary;
+}
+
+// Navbar styles
+.navbar-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: @bg-primary;
+  border-bottom: 1px solid @border-color;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .nav-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: @primary-color;
+    letter-spacing: 0.5px;
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+  }
+
+  .nav-link {
+    color: @text-primary;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+    background: none;
+    &.active, &:hover {
+      background: @bg-secondary;
+      color: @primary-color;
+    }
+    i {
+      margin-right: 0.5rem;
+      font-size: 0.9em;
+    }
+  }
+
+  .nav-user {
+    color: @text-secondary;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: @bg-secondary;
+    border-radius: 8px;
+    border: 1px solid @border-color-light;
+    i {
+      font-size: 1.1em;
+      color: @primary-color;
+    }
+  }
+}
+
+// Main content styles
+.main-content-centered {
+  flex: 1;
+  padding: 2rem 0;
+  position: relative;
+  z-index: 1;
+  background: @bg-secondary;
+  > div {
+    background: @bg-primary;
+    border-radius: 16px;
+    border: 1px solid @border-color-light;
+    box-shadow: @shadow-md;
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+}
+
+// Modal styles
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.15);
+  z-index: 1040;
+}
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  .modal-dialog {
+    background: @bg-primary;
+    border-radius: 16px;
+    box-shadow: @shadow-lg;
+    max-width: 400px;
+    width: 100%;
+    .modal-content {
+      border-radius: 16px;
+      border: 1px solid @border-color-light;
+      .modal-header, .modal-footer {
+        background: @bg-secondary;
+        border-bottom: 1px solid @border-color-light;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 1.25rem 1.5rem;
+      }
+      .modal-footer {
+        border-top: 1px solid @border-color-light;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+      .modal-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: @text-primary;
+      }
+      .btn-close {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: @text-muted;
+        cursor: pointer;
+        &:hover { color: @primary-color; }
+      }
+    }
+    .modal-body {
+      padding: 1.5rem;
+      color: @text-secondary;
+    }
+  }
+}
+
+// Alert component styles
+alert {
+  margin-bottom: 1rem;
+  ::ng-deep .alert {
+    border-radius: 12px;
+    border: 1px solid @border-color;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: @shadow-sm;
+    background: @bg-secondary;
+    color: @text-primary;
+    &.alert-success { color: @success-color; }
+    &.alert-danger { color: @danger-color; }
+    &.alert-warning { color: @warning-color; }
+    &.alert-info { color: @info-color; }
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+} 

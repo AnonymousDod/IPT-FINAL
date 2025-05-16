@@ -1,0 +1,13 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="form-header">
+      <h2>Verify Email</h2>
+    </div>
+    <div *ngIf="emailStatus == EmailStatus.Verifying">
+      Verifying...
+    </div>
+    <div *ngIf="emailStatus == EmailStatus.Failed">
+      Verification failed, you can also verify your account using the <a routerLink="../forgot-password" class="signup-link">forgot password</a> page.
+    </div>
+  </div>
+</div>

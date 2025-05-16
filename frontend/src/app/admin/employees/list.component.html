@@ -1,0 +1,94 @@
+<div class="card" style="margin-top: 20px;">
+  <div class="card-header" style="font-size: 1.5rem; font-weight: bold;">EMPLOYEES</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Employee ID</th>
+            <th>Account</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Hire Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees">
+            <td>{{employee.employeeId}}</td>
+            <td>{{employee.user?.email}}</td>
+            <td>{{employee.position}}</td>
+            <td>{{employee.Department?.name}}</td>
+            <td>{{employee.hireDate | date:'M/d/yyyy'}}</td>
+            <td>
+              <span class="badge-custom" [ngClass]="{'badge-active': employee.status === 'Active', 'badge-inactive': employee.status !== 'Active'}">
+                {{employee.status}}
+              </span>
+            </td>
+            <td style="white-space: nowrap">
+              <button class="btn btn-sm btn-info me-1" (click)="viewRequests(employee.id)" style="background:#00bcd4;border:none;">Requests</button>
+              <button class="btn btn-sm btn-info me-1" (click)="viewWorkflows(employee.id)" style="background:#00bcd4;border:none;">Workflows</button>
+              <button class="btn btn-sm btn-warning me-1" (click)="openTransferModal(employee)" style="color:#222;font-weight:500;">Transfer</button>
+              <a routerLink="edit/{{employee.id}}" class="btn btn-sm btn-primary">Edit</a>
+              <button class="btn btn-sm btn-danger ms-1" (click)="deleteEmployee(employee.id)">Delete</button>
+            </td>
+          </tr>
+          <tr *ngIf="!employees?.length">
+            <td colspan="7" class="text-center">
+              <span *ngIf="loading" class="spinner-border spinner-border-lg align-center"></span>
+              <span *ngIf="!loading">No employees found</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-primary float-end" style="font-size:1.1rem;padding:10px 30px;" routerLink="add">Add Employee</button>
+  </div>
+</div>
+
+<!-- Transfer Modal -->
+<div class="modal" tabindex="-1" [ngStyle]="{display: showTransferModal ? 'block' : 'none', background: 'rgba(0,0,0,0.4)'}" *ngIf="showTransferModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Transfer Employee: {{selectedEmployee?.employeeId}}</h5>
+        <button type="button" class="btn-close" (click)="closeTransferModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Department</label>
+          <select class="form-select" [(ngModel)]="selectedDepartmentId">
+            <option value="">-- Select Department --</option>
+            <option *ngFor="let dept of departments" [ngValue]="dept.id">{{dept.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" [disabled]="loading" style="color:#222;font-weight:500;" (click)="confirmTransfer()">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+          Transfer
+        </button>
+        <button type="button" class="btn btn-secondary" [disabled]="loading" (click)="closeTransferModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Transfer Modal -->
+
+<style>
+.badge-custom {
+  display: inline-block;
+  padding: 0.35em 0.8em;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 8px;
+  color: #fff;
+}
+.badge-active {
+  background: #388e6c;
+}
+.badge-inactive {
+  background: #bdbdbd;
+}
+</style> 

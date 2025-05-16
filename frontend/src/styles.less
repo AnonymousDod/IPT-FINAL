@@ -1,0 +1,379 @@
+/* Import Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Import Font Awesome */
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+/* Variables */
+@primary-color: #4361ee;
+@secondary-color: #3a0ca3;
+@success-color: #4cc9f0;
+@danger-color: #f72585;
+@light-color: #f8f9fa;
+@dark-color: #212529;
+@border-radius: 8px;
+@box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+@transition: all 0.3s ease;
+
+/* Base styles */
+body {
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #222;
+    min-height: 100vh;
+}
+
+/* Card styles */
+.card, .table-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border: 1px solid #e0e0e0;
+    padding: 0;
+}
+
+.table {
+    background: transparent;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 0;
+}
+
+.table th {
+    background: #fafbfc;
+    font-weight: 700;
+    color: #222;
+    border-top: none;
+}
+
+.table td {
+    background: transparent;
+    vertical-align: middle;
+}
+
+.badge {
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1em;
+    padding: 0.4em 1.1em;
+    letter-spacing: 0.02em;
+}
+
+.badge-success, .bg-success {
+    background: #388e3c !important;
+    color: #fff !important;
+}
+.badge-danger, .bg-danger {
+    background: #d32f2f !important;
+    color: #fff !important;
+}
+.badge-warning, .bg-warning {
+    background: #fbc02d !important;
+    color: #222 !important;
+}
+
+.btn-primary, .btn-primary:focus {
+    background: #1976d2 !important;
+    border-color: #1976d2 !important;
+    color: #fff !important;
+    font-weight: 500;
+    border-radius: 6px;
+    min-width: 90px;
+}
+
+.btn-primary:hover {
+    background: #1256a3 !important;
+    border-color: #1256a3 !important;
+}
+
+.btn-info, .btn-info:focus {
+    background: #00bcd4 !important;
+    border-color: #00bcd4 !important;
+    color: #fff !important;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.btn-info:hover {
+    background: #0097a7 !important;
+    border-color: #0097a7 !important;
+}
+
+.btn-warning, .btn-warning:focus {
+    background: #ffc107 !important;
+    border-color: #ffc107 !important;
+    color: #222 !important;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.btn-warning:hover {
+    background: #ffb300 !important;
+    border-color: #ffb300 !important;
+}
+
+/* Card styles */
+.card-header {
+    background-color: @primary-color;
+    color: white;
+    border-radius: @border-radius @border-radius 0 0 !important;
+    padding: 1.25rem;
+    font-weight: 500;
+}
+
+/* Form styles */
+.form-control {
+    border-radius: @border-radius;
+    border: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+    transition: @transition;
+    
+    &:focus {
+        border-color: @primary-color;
+        box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+    }
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: @dark-color;
+}
+
+/* Button styles */
+.btn {
+    border-radius: @border-radius;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: @transition;
+    
+    &-primary {
+        background-color: @primary-color;
+        border-color: @primary-color;
+        
+        &:hover {
+            background-color: darken(@primary-color, 10%);
+            border-color: darken(@primary-color, 10%);
+        }
+    }
+    
+    &-link {
+        color: @primary-color;
+        text-decoration: none;
+        
+        &:hover {
+            color: darken(@primary-color, 10%);
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Alert styles */
+.alert {
+    border-radius: @border-radius;
+    border: none;
+    padding: 1rem;
+    
+    &-success {
+        background-color: lighten(@success-color, 30%);
+        color: darken(@success-color, 30%);
+    }
+    
+    &-danger {
+        background-color: lighten(@danger-color, 30%);
+        color: darken(@danger-color, 30%);
+    }
+}
+
+/* Navigation styles */
+.navbar {
+    background-color: white;
+    box-shadow: @box-shadow;
+    padding: 1rem;
+    
+    .navbar-brand {
+        font-weight: 700;
+        color: @primary-color;
+    }
+    
+    .nav-link {
+        color: @dark-color;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: @transition;
+        
+        &:hover {
+            color: @primary-color;
+        }
+        
+        &.active {
+            color: @primary-color;
+            font-weight: 600;
+        }
+    }
+}
+
+/* Footer styles */
+.footer {
+    background-color: white;
+    padding: 2rem 0;
+    margin-top: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    
+    a {
+        color: @primary-color;
+        text-decoration: none;
+        transition: @transition;
+        
+        &:hover {
+            color: darken(@primary-color, 10%);
+        }
+    }
+}
+
+/* Utility classes */
+.text-primary { color: @primary-color !important; }
+.bg-primary { background-color: @primary-color !important; }
+.text-secondary { color: @secondary-color !important; }
+.bg-secondary { background-color: @secondary-color !important; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .navbar {
+        padding: 0.5rem;
+    }
+    
+    .footer {
+        padding: 1rem 0;
+    }
+}
+
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    i {
+        font-size: 1.2rem;
+    }
+}
+
+/* NAVIGATION BAR */
+.navbar-custom {
+  background: #fafbfc;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-custom .nav-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #222;
+}
+.navbar-custom .nav-links {
+  display: flex;
+  gap: 2rem;
+}
+.navbar-custom .nav-link {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+.navbar-custom .nav-link.active,
+.navbar-custom .nav-link:hover {
+  color: #4361ee;
+}
+
+/* CARD & TABLE */
+.card-custom {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border: 1px solid #e0e0e0;
+  width: 90vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+.card-header-custom {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #444;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 18px 28px 12px 28px;
+  border-radius: 10px 10px 0 0;
+}
+.table-custom {
+  margin: 0;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+.table-custom th {
+  background: #fafbfc;
+  font-weight: 700;
+  color: #222;
+  border-top: none;
+  font-size: 1.07em;
+  padding: 14px 18px;
+}
+.table-custom td {
+  vertical-align: middle;
+  font-size: 1em;
+  padding: 12px 18px;
+}
+.table-custom tr {
+  transition: background 0.2s;
+}
+.table-custom tr:hover {
+  background: #f5f7fa;
+}
+
+/* BUTTONS */
+.btn-custom {
+  background: #1976d2 !important;
+  border: none;
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 6px;
+  min-width: 90px;
+  padding: 7px 0;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.btn-custom:hover {
+  background: #1256a3 !important;
+}
+
+/* BADGES */
+.badge-custom {
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 0.4em 1.1em;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+.badge-active {
+  background: #388e3c !important;
+  color: #fff !important;
+}
+.badge-inactive {
+  background: #d32f2f !important;
+  color: #fff !important;
+}
+
+.main-content-centered {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 80vh;
+  padding: 32px 0;
+}

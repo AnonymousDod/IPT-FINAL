@@ -1,0 +1,90 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3>
+        <span *ngIf="!isSingleEmployeeView">Requests</span>
+        <span *ngIf="isSingleEmployeeView">Requests for Employee: {{employeeName}}</span>
+      </h3>
+      <button *ngIf="isSingleEmployeeView" class="btn btn-outline-secondary" (click)="backToEmployees()">
+        <i class="fa fa-arrow-left"></i> Back to Employees
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div *ngIf="loading" class="text-center p-3">
+      <span class="spinner-border spinner-border-lg"></span>
+    </div>
+
+    <div *ngIf="!loading && (!requests || requests.length === 0)" class="alert alert-info">
+      <span *ngIf="!isSingleEmployeeView">No requests found. Click "Add Request" to create your first request.</span>
+      <span *ngIf="isSingleEmployeeView">No requests found for this employee.</span>
+    </div>
+    
+    <div *ngIf="!loading && requests && requests.length > 0" class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th *ngIf="!isSingleEmployeeView">Employee ID</th>
+            <th>Items</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests">
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-info': request.type === 'leave',
+                'bg-warning': request.type === 'expense',
+                'bg-secondary': request.type === 'transfer'
+              }">{{request.type | titlecase}}</span>
+            </td>
+            <td *ngIf="!isSingleEmployeeView">
+              <span *ngIf="request.Employee">
+                {{request.Employee?.employeeId || 'ID Not Set'}} - 
+                {{request.Employee?.user?.firstName || ''}} {{request.Employee?.user?.lastName || ''}}
+              </span>
+              <span *ngIf="!request.Employee">
+                {{request.employeeId}}
+              </span>
+            </td>
+            <td>
+              <ul class="list-unstyled mb-0">
+                <li *ngFor="let item of request.RequestItems || []">
+                  <span class="badge bg-light text-dark">{{item.name}} × {{item.quantity}}</span>
+                </li>
+                <li *ngIf="!request.RequestItems || request.RequestItems.length === 0">
+                  <span class="text-muted">No items</span>
+                </li>
+              </ul>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-warning': request.status === 'Pending',
+                'bg-success': request.status === 'Approved',
+                'bg-danger': request.status === 'Rejected'
+              }">{{request.status}}</span>
+            </td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-sm btn-primary me-1" (click)="edit(request.id)">
+                  <i class="fa fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="delete(request.id)">
+                  <i class="fa fa-trash"></i> Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="text-end mt-3">
+      <button class="btn btn-primary" (click)="add()">
+        <i class="fa fa-plus"></i> Add Request
+      </button>
+    </div>
+  </div>
+</div> 

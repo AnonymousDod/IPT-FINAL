@@ -1,0 +1,36 @@
+<nav class="navbar-custom">
+  <span class="nav-title">IPT Final (Prototype)</span>
+  <div class="nav-links">
+    <!-- Show these links only when logged in -->
+    <ng-container *ngIf="account">
+      <a routerLink="/" routerLinkActive="active" class="nav-link">Accounts</a>
+      <a routerLink="/employees" routerLinkActive="active" class="nav-link">Employees</a>
+      <a routerLink="/departments" routerLinkActive="active" class="nav-link">Departments</a>
+      <a routerLink="/requests" routerLinkActive="active" class="nav-link">Requests</a>
+    </ng-container>
+  </div>
+  <div class="nav-right">
+    <!-- Show user info and logout when logged in -->
+    <ng-container *ngIf="account">
+      <span class="nav-user">
+        <i class="fas fa-user me-2"></i>
+        {{account.firstName}} {{account.lastName}}
+      </span>
+      <a (click)="logout()" class="nav-link" style="cursor: pointer;">
+        <i class="fas fa-sign-out-alt me-2"></i>Logout
+      </a>
+    </ng-container>
+    <!-- Show login link when not logged in -->
+    <ng-container *ngIf="!account">
+      <a routerLink="/account/login" class="nav-link">
+        <i class="fas fa-sign-in-alt me-2"></i>Login
+      </a>
+    </ng-container>
+  </div>
+</nav>
+<div class="main-content-centered">
+  <div style="width:100%;max-width:1200px;">
+    <alert></alert>
+    <router-outlet></router-outlet>
+  </div>
+</div>

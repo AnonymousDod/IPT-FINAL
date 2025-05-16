@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-header">
+    <h3>{{id ? 'Edit' : 'Add'}} Request</h3>
+  </div>
+  <div class="card-body">
+    <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group mb-3">
+        <label for="type">Request Type</label>
+        <select class="form-select" [(ngModel)]="request.type" name="type" required>
+          <option value="">-- Select Request Type --</option>
+          <option value="leave">Leave Request</option>
+          <option value="expense">Expense Request</option>
+          <option value="transfer">Transfer Request</option>
+        </select>
+      </div>
+      
+      <div class="form-group mb-3">
+        <label for="employeeId">Employee ID</label>
+        <select class="form-select" [(ngModel)]="request.employeeId" name="employeeId" [disabled]="!!id" required>
+          <option value="">-- Select Employee --</option>
+          <option *ngFor="let employee of employees" [ngValue]="employee.id">
+            {{employee.employeeId || 'ID Not Set'}} - {{employee.user?.firstName || ''}} {{employee.user?.lastName || ''}}
+          </option>
+        </select>
+        <small *ngIf="employees.length === 0" class="text-muted">Loading employees...</small>
+      </div>
+      
+      <div class="form-group mb-3">
+        <label>Request Items</label>
+        <div class="card mb-2">
+          <div class="card-body p-2">
+            <div *ngFor="let item of request.items; let i = index" class="row mb-2 align-items-center">
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Item name" [(ngModel)]="item.name" name="itemName{{i}}" required>
+              </div>
+              <div class="col-md-3">
+                <input type="number" class="form-control" placeholder="Quantity" [(ngModel)]="item.quantity" name="itemQuantity{{i}}" min="1" required>
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-sm btn-danger" (click)="removeItem(i)">
+                  <i class="fa fa-times"></i> Remove
+                </button>
+              </div>
+            </div>
+            <div *ngIf="request.items.length === 0" class="alert alert-warning">
+              At least one item is required.
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary" (click)="addItem()">
+          <i class="fa fa-plus"></i> Add Item
+        </button>
+      </div>
+      
+      <div class="form-group mt-4">
+        <button [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+          Save Request
+        </button>
+        <a routerLink="../" class="btn btn-link">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div> 

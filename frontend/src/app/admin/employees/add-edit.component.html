@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-header">
+    <h3>{{id ? 'Edit' : 'Add'}} Employee</h3>
+  </div>
+  <div class="card-body">
+    <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group mb-3">
+        <label for="employeeId">Employee ID</label>
+        <input type="text" class="form-control" [(ngModel)]="employee.employeeId" name="employeeId" [disabled]="id" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="accountId">Account</label>
+        <select class="form-select" [(ngModel)]="employee.accountId" name="accountId">
+          <option *ngFor="let account of accounts" [value]="account.id">
+            {{account.email}} ({{account.role === 'Admin' ? 'Admin User' : 'Normal User'}})
+          </option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="position">Position</label>
+        <input type="text" class="form-control" [(ngModel)]="employee.position" name="position" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="departmentId">Department</label>
+        <select class="form-select" [(ngModel)]="employee.departmentId" name="departmentId">
+          <option *ngFor="let dept of departments" [value]="dept.id">{{dept.name}}</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="hireDate">Hire Date</label>
+        <input type="date" class="form-control" [(ngModel)]="employee.hireDate" name="hireDate" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="status">Status</label>
+        <select class="form-select" [(ngModel)]="employee.status" name="status">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+          Save
+        </button>
+        <a routerLink="../" class="btn btn-link">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div> 

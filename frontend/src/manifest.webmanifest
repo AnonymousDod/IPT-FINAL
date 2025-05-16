@@ -1,0 +1,13 @@
+{
+  "name": "IPT FINAL JJRR",
+  "short_name": "JJRR",
+  "theme_color": "#007bff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/"
+} 
+ 
+ 
+ 
+ 
